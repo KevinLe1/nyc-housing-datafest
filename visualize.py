@@ -30,7 +30,7 @@ def get_mlidf(path):
 def add_col(df, path):
 	'''Returns df with added column from path'''
 	df2 = get_mlidf(path)
-	return df.merge(df2)
+	return df.join(df2)
 
 def get_percentile_column(df, colname):
 	'''Returns a column of the percentile ranking of each datapoint within its year
