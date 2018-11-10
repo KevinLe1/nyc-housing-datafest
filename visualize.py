@@ -15,7 +15,7 @@ for index, row in df.iterrows():
 df = pd.DataFrame.from_dict(new_dict, orient = 'index')
 tuples = [tuple(label.split(';')) for label in df.index]
 mli = pd.MultiIndex.from_tuples(tuples, names = ['subborough', 'year'])
-df = pd.DataFrame(list(df.median_rent), index = mli)
+df = pd.DataFrame(list(df.median_rent), columns = ['median_rent'], index = mli)
 
 del tuples, mli, mini_dict, new_dict
 
@@ -27,3 +27,11 @@ for index, row in df.iterrows():
 	else:
 		years[index[1]] = []
 		years[index[1]].append(row[0])
+
+rp = []
+from scipy.stats import percentileofscore
+for index, row in df.iterrows():
+	year = index[1]
+	rp.append(percentileofscore(years[year], row[0]))
+
+df['rent_percentile'] = rp
